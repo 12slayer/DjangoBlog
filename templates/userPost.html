@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+{% for object in userblog %}
+    {% include 'list-inline.html' with blog_post=object truncate=True detail=False%}
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.appuser %}
+            <div class="col-12">
+            <a href="{{ object.get_edit_url }}" ><i class="fa fa-pencil fa-fw"></i>Edit</a>
+             <a href="{{ object.get_delete_url }}"><i class="fa fa-trash-o fa-fw"></i>Delete</a>
+              {% endif %}
+    {% endif %}
+
+
+{% endfor %}
+    </div>
+{% endblock %}
+</div>

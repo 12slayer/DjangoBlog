@@ -1,0 +1,14 @@
+{% extends "account/admin.html" %}
+{% load static %}
+
+{% block content %}
+<h1>are you sure u want to delete: </h1>
+<p>{{ appuser.name }}</p>
+
+<form method="post"  action="{% url 'delete_appuser' appuser.id  %}">{% csrf_token %}
+
+<button class="btn btn-danger">yes delete</button>
+
+
+</form>
+{% endblock %}

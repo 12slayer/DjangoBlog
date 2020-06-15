@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+<style>
+    .profile-pi{
+		max-width: 50px;
+		max-height:50px;
+		margin: 0 auto;
+		border-radius: 20%;
+
+    }
+</style>
+{% block content %}
+    <div class="row">
+    {% include 'list-inline.html' with blog_post=object truncate=false detail=True%}
+    </div>
+
+     <form action = "{% url 'like-post-view' %}" method="POST" class="ui form">
+        {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ object.id }}">
+            {% if user not in object.liked.all %}
+                <button class="btn btn-success"  type="submit" ><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button>
+            {% else %}
+                 <button class="btn btn-danger"  type="submit" ><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></button>
+            {% endif %}
+            <strong>{{ object.liked.all.count }} likes</strong>
+        </form>
+
+        <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        <!-- comments -->
+        <h2>{{ object.countcomment }} comments</h2>
+
+        {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.user_id.name }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.date_comment }}
+            </span>
+          </p>
+          {{ comment.message| linebreaks }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Your comment is awaiting moderation
+        </div>
+        {% else %}
+        <h3>Leave a comment</h3>
+        <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,68 @@
+<style>
+        .blogpic{
+		max-width: 500px;
+		max-height:500px;
+		margin:auto;
+		border-radius: 70%;
+	}
+    .img{
+            width:830px;
+         height:260px;
+    }
+</style>
+
+<div class="col-12 col-md-10 mb-3 mx-auto">
+<div class="card {% if not blog_post.publish_date %} border border-warning text-dark {% endif %}" >
+
+
+    <div class="card text-black bg-Light  mb-3">
+
+        <h5 class="card-title " style="color:Tomato;" >
+            {{ blog_post.title }}
+        </h5>
+
+        <p class="text-primary">{{ blog_post.getname }} </p>
+
+         {% if blog_post.image %}
+            <a href="{{ blog_post.get_absolute_url }}">
+            <img  src="{{ blog_post.image.url }}" class="img" /></a>
+        {% endif %}
+
+        <p class = "card-text">
+        <small class="text-muted">{{ blog_post.publish_date }}</small>
+
+            {% if truncate %}
+            {{ blog_post.content|linebreaks|truncatewords:30 }}
+            {% else %}
+                {{ blog_post.content|linebreaks }}
+            {% endif %}
+        </p>
+
+
+
+
+        {% if not detail %}
+            {% if not blog_post.publish_date %}Draft{% endif %}
+            {% if request.user.is_authenticated %}
+        <a href="{{ blog_post.get_absolute_url }}" class="text-success">View More</a>
+            {% else %}
+                <p class="text-success">Login with account to view more about it.</p>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+
+
+
+ {% if request.user.is_staff %}
+
+            <div class="col-12">
+
+             <a href="{{ object.get_delete_url }}"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+    {% endif %}
+
+</div>
+</div>

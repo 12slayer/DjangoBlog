@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+{% for object in blog_list %}
+    {% include 'list-inline.html' with blog_post=object truncate=True detail=False%}
+{% endfor %}
+
+    {% for com in comment %}
+    <div class="media mb-4">
+        <img class="">
+        <div class="media body">
+            <h5 class="nt-0">commenter name</h5>
+            {{ com.message }}
+        </div>
+        {% endfor %}
+
+
+{% endblock %}

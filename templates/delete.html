@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>are you sure u want to delete: </h1>
+<p>{{ object.title }}</p>
+
+<form method="post" >{% csrf_token %}
+
+<button class="btn btn-danger">yes delete</button>
+
+
+</form>
+{% endblock %}
